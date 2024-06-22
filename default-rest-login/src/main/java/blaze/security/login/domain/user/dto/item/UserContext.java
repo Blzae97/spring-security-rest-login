@@ -29,6 +29,11 @@ public class UserContext implements UserDetails {
         return authorityList;
     }
 
+    public DefaultUserItem getUserItem() {
+        this.userItem.hidePassword();
+        return userItem;
+    }
+
     @Override
     public String getPassword() {
         return userItem.getPassword();
@@ -73,8 +78,8 @@ public class UserContext implements UserDetails {
     }
 
     /**
-     *<p>회원의 계정이 활성화되어 있는지 확인합니다. 비활성화된 계정은 로그인할 수 없습니다.</p>
-     *<p>회원의 계정 활성화 상태를 획인하여, 비활성화된 계정에서 로그인하지 못하게 합니다.</p>
+     * <p>회원의 계정이 활성화되어 있는지 확인합니다. 비활성화된 계정은 로그인할 수 없습니다.</p>
+     * <p>회원의 계정 활성화 상태를 획인하여, 비활성화된 계정에서 로그인하지 못하게 합니다.</p>
      *
      * @return true: 계정이 활성화됨. false: 계정이 비활성화됨.
      */
