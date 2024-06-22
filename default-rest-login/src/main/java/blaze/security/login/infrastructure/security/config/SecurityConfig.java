@@ -11,15 +11,23 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
     private final AuthenticationProvider restAuthenticationProvider;
+    private final AuthenticationSuccessHandler restSuccessHandler;
+    private final AuthenticationFailureHandler restFailureHandler;
 
-    public SecurityConfig(AuthenticationProvider restAuthenticationProvider) {
+    public SecurityConfig(AuthenticationProvider restAuthenticationProvider,
+                          AuthenticationSuccessHandler restSuccessHandler,
+                          AuthenticationFailureHandler restFailureHandler) {
         this.restAuthenticationProvider = restAuthenticationProvider;
+        this.restSuccessHandler = restSuccessHandler;
+        this.restFailureHandler = restFailureHandler;
     }
 
 
@@ -70,6 +78,8 @@ public class SecurityConfig {
     private RestAuthenticationFilter restAuthenticationFilter(AuthenticationManager authenticationManager) {
         RestAuthenticationFilter restAuthenticationFilter = new RestAuthenticationFilter();
         restAuthenticationFilter.setAuthenticationManager(authenticationManager);
+        restAuthenticationFilter.setAuthenticationSuccessHandler(restSuccessHandler);
+        restAuthenticationFilter.setAuthenticationFailureHandler(restFailureHandler);
 
         return restAuthenticationFilter;
     }
