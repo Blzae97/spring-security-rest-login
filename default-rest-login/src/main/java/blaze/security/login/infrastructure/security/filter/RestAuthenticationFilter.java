@@ -1,6 +1,6 @@
 package blaze.security.login.infrastructure.security.filter;
 
-import blaze.security.login.domain.user.dto.UserRegisterItem;
+import blaze.security.login.domain.user.dto.UserSignInRequest;
 import blaze.security.login.infrastructure.security.token.RestAuthenticationToken;
 import blaze.security.login.infrastructure.security.util.WebUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,9 +40,9 @@ public class RestAuthenticationFilter extends AbstractAuthenticationProcessingFi
             throw new IllegalArgumentException("Authentication Content-type is not supported");
         }
 
-        UserRegisterItem userRegisterItem = objectMapper.readValue(request.getReader(), UserRegisterItem.class);
-        String username = userRegisterItem.getUsername();
-        String password = userRegisterItem.getPassword();
+        UserSignInRequest userSignInRequest = objectMapper.readValue(request.getReader(), UserSignInRequest.class);
+        String username = userSignInRequest.getUsername();
+        String password = userSignInRequest.getPassword();
         if (!StringUtils.hasText(username) || !StringUtils.hasText(password)) {
             throw new AuthenticationServiceException("Username or Password not provided");
         }
