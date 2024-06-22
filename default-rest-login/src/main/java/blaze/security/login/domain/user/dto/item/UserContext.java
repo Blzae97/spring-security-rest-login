@@ -1,4 +1,4 @@
-package blaze.security.login.domain.user.dto;
+package blaze.security.login.domain.user.dto.item;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package blaze.security.login.infrastructure.security.filter;
 
-import blaze.security.login.domain.user.dto.UserSignInRequest;
+import blaze.security.login.domain.user.dto.request.UserSignInRequest;
 import blaze.security.login.infrastructure.security.token.RestAuthenticationToken;
 import blaze.security.login.infrastructure.security.util.WebUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;

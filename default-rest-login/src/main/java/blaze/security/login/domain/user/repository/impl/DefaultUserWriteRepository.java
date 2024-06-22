@@ -1,6 +1,6 @@
 package blaze.security.login.domain.user.repository.impl;
 
-import blaze.security.login.domain.user.dto.UserRegisterItem;
+import blaze.security.login.domain.user.dto.item.UserRegisterItem;
 import blaze.security.login.domain.user.entity.User;
 import blaze.security.login.domain.user.repository.impl.jpa.UserJpaRepository;
 import blaze.security.login.domain.user.repository.inf.UserWriteRepository;

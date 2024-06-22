@@ -1,9 +1,9 @@
 package blaze.security.login.domain.user.service.impl;
 
-import blaze.security.login.domain.user.dto.DefaultUserItem;
-import blaze.security.login.domain.user.dto.UserAuthorityItem;
-import blaze.security.login.domain.user.dto.UserContext;
-import blaze.security.login.domain.user.dto.UserItem;
+import blaze.security.login.domain.user.dto.item.DefaultUserItem;
+import blaze.security.login.domain.user.dto.item.UserAuthorityItem;
+import blaze.security.login.domain.user.dto.item.UserContext;
+import blaze.security.login.domain.user.dto.item.UserItem;
 import blaze.security.login.domain.user.repository.inf.UserAuthorityReadRepository;
 import blaze.security.login.domain.user.repository.inf.UserReadRepository;
 import org.springframework.security.core.userdetails.UserDetails;

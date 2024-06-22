@@ -1,6 +1,6 @@
 package blaze.security.login.domain.user.repository.inf;
 
-import blaze.security.login.domain.user.dto.UserRegisterItem;
+import blaze.security.login.domain.user.dto.item.UserRegisterItem;
 
 public interface UserWriteRepository {
     /**

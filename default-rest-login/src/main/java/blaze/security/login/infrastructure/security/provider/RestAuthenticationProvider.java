@@ -1,6 +1,6 @@
 package blaze.security.login.infrastructure.security.provider;
 
-import blaze.security.login.domain.user.dto.UserContext;
+import blaze.security.login.domain.user.dto.item.UserContext;
 import blaze.security.login.infrastructure.security.token.RestAuthenticationToken;
 import lombok.Builder;
 import org.springframework.security.authentication.AuthenticationProvider;
