@@ -1,0 +1,14 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.mariadb.jdbc:mariadb-java-client'
+
+    implementation "org.bouncycastle:bcprov-jdk15on:1.64"
+}
+
+bootJar {
+    enabled = true
+}
+
+jar {
+    enabled = false
+}
