@@ -25,7 +25,7 @@ public class RestAuthenticationFilter extends AbstractAuthenticationProcessingFi
      * /api/login 이면서 post일 때만 해당 필터가 동작하게
      */
     public RestAuthenticationFilter() {
-        super(new AntPathRequestMatcher("/api/login", HttpMethod.POST.name()));
+        super(new AntPathRequestMatcher("/api/sign-in", HttpMethod.POST.name()));
     }
 
     @Override
