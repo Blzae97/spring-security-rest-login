@@ -1,10 +1,12 @@
 rootProject.name = 'rest-login'
 
+includeProject(":default-rest-login", "default-rest-login")
+includeProject(":redis-rest-login", "redis-rest-login")
+
 def includeProject(String name, String path){
     include(name)
     if(path != null){
         project(name).projectDir = new File(path)
     }
 }
-include 'default-rest-login'
 
