@@ -56,6 +56,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/sign-in").permitAll()
                         .requestMatchers("/api/sign-up").permitAll()
+                        .requestMatchers("/api/logout").permitAll()
                         .requestMatchers("/api/index").authenticated()
                         .requestMatchers("/api/write").hasRole("WRITE")
                         .anyRequest().authenticated()
