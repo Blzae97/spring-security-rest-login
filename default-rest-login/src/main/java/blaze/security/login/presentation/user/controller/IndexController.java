@@ -11,7 +11,7 @@ public class IndexController {
 
     @GetMapping(value = "/csrf")
     public String csrf() {
-        return "test";
+        return "csrf";
     }
 
     @GetMapping(value = "/index")
