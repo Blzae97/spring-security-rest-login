@@ -3,6 +3,7 @@ package blaze.security.login.infrastructure.security.config;
 import blaze.security.login.infrastructure.security.entrypoint.RestAuthenticationEntryPoint;
 import blaze.security.login.infrastructure.security.filter.RestAuthenticationFilter;
 import blaze.security.login.infrastructure.security.handler.RestAccessDeniedHandler;
+import blaze.security.login.infrastructure.security.handler.SpaCsrfTokenRequestHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -11,15 +12,11 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.context.DelegatingSecurityContextRepository;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
-import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @EnableWebSecurity
 @Configuration
@@ -57,6 +54,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/sign-in").permitAll()
                         .requestMatchers("/api/sign-up").permitAll()
                         .requestMatchers("/api/logout").permitAll()
+                        .requestMatchers("/api/csrf").permitAll()
                         .requestMatchers("/api/index").authenticated()
                         .requestMatchers("/api/write").hasRole("WRITE")
                         .anyRequest().authenticated()
@@ -77,8 +75,10 @@ public class SecurityConfig {
                 );
 
         http
-                .csrf(AbstractHttpConfigurer::disable);
-
+                .csrf(cf -> cf
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
+                );
 
         return http.build();
     }

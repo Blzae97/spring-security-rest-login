@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api")
 public class IndexController {
 
+    @GetMapping(value = "/csrf")
+    public String csrf() {
+        return "test";
+    }
+
     @GetMapping(value = "/index")
     public Authentication index(Authentication authentication) {
         return authentication;
