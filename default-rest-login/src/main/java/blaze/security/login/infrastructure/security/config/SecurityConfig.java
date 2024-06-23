@@ -1,6 +1,8 @@
 package blaze.security.login.infrastructure.security.config;
 
+import blaze.security.login.infrastructure.security.entrypoint.RestAuthenticationEntryPoint;
 import blaze.security.login.infrastructure.security.filter.RestAuthenticationFilter;
+import blaze.security.login.infrastructure.security.handler.RestAccessDeniedHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -14,6 +16,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.DelegatingSecurityContextRepository;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 
 @EnableWebSecurity
 @Configuration
@@ -50,19 +56,28 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/sign-in").permitAll()
                         .requestMatchers("/api/sign-up").permitAll()
+                        .requestMatchers("/api/index").authenticated()
+                        .requestMatchers("/api/write").hasRole("WRITE")
                         .anyRequest().authenticated()
                 );
 
         AuthenticationManager authenticationManager = authenticationManager(http);
 
         http
-                .addFilterBefore(restAuthenticationFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(restAuthenticationFilter(http, authenticationManager), UsernamePasswordAuthenticationFilter.class);
 
         http
                 .authenticationManager(authenticationManager);
 
         http
+                .exceptionHandling(exec -> exec
+                        .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+                        .accessDeniedHandler(new RestAccessDeniedHandler())
+                );
+
+        http
                 .csrf(AbstractHttpConfigurer::disable);
+
 
         return http.build();
     }
@@ -75,14 +90,14 @@ public class SecurityConfig {
         return managerBuilder.build();
     }
 
-    private RestAuthenticationFilter restAuthenticationFilter(AuthenticationManager authenticationManager) {
-        RestAuthenticationFilter restAuthenticationFilter = new RestAuthenticationFilter();
+    private RestAuthenticationFilter restAuthenticationFilter(HttpSecurity http,
+                                                              AuthenticationManager authenticationManager) {
+        RestAuthenticationFilter restAuthenticationFilter = new RestAuthenticationFilter(http);
         restAuthenticationFilter.setAuthenticationManager(authenticationManager);
         restAuthenticationFilter.setAuthenticationSuccessHandler(restSuccessHandler);
         restAuthenticationFilter.setAuthenticationFailureHandler(restFailureHandler);
 
         return restAuthenticationFilter;
     }
-
 
 }
